@@ -21,8 +21,8 @@ impl fmt::Display for Type {
 
 #[derive(Debug)]
 pub struct Token {
-    info: Type,
-    content: String,
+    pub info: Type,
+    pub content: String,
 }
 
 impl Token {
