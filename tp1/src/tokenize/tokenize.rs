@@ -17,7 +17,7 @@ pub fn tokenize(text: String) -> Vec<Token> {
                         result.push(Token::create_token(Type::Double, string.clone()));
                         string.clear();
                         println!("Reserved symbol: {}", c);
-                        result.push(Token::create_token(Type::Strings, c.to_string()));
+                        result.push(Token::create_token(Type::ReservedSymbol, c.to_string()));
                     } else {
                         string.push(c);
                     }

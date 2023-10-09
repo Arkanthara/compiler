@@ -27,9 +27,7 @@ pub fn infix_to_postfix(mut input: Vec<Token>) -> Vec<Token> {
     let mut priority = 0;
     input.reverse();
     while !input.is_empty() {
-        let item: Token = input
-            .pop()
-            .unwrap_or(Token::create_token(Type::Strings, " ".to_owned()));
+        let item: Token = input.pop().unwrap();
         match item.info {
             Type::ReservedSymbol => {
                 if item.content.as_str() == "(" {
