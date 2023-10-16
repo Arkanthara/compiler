@@ -7,7 +7,7 @@ use crate::tokenize::token::*;
 use crate::tokenize::tokenize::tokenize;
 
 fn main() {
-    let stack: Vec<Token> = tokenize("((2*2)/2-1)/(2+2)".to_string());
+    let stack: Vec<Token> = tokenize("((2*2)/2-2)/(2+2)".to_string());
     //    println!("My vect: {:?}", stack);
     let post: Vec<Token> = infix_to_postfix(stack);
     //    println!("postfix: {:?}", post);
@@ -16,7 +16,7 @@ fn main() {
         None => println!("Error !"),
         Some(value) => {
             println!("The result of postfix evaluation is: {}", value);
-            let result: f64 = ((2.0 * 2.0) / 2.0 - 1.0) / (2.0 + 2.0);
+            let result: f64 = ((2.0 * 2.0) / 2.0 - 2.0) / (2.0 + 2.0);
             assert_eq!(value, result);
         }
     }
