@@ -1,0 +1,26 @@
+LL: On va de gauche à droite et c'est une dérivation gauche...
+LR: On va de gauche à droite et c'est une dérivation droite...
+
+## Analyse descendante LL
+
+### Analyse déterministe
+
+À chaque expansion, l'analyseur sait choisir une production. Il ne revient jamais sur ce choix....
+L'analyseur prédit quelle production utiliser...
+$\Rightarrow$ ne fonctionne qu'avec certaines grammaires, dites LL(k)
+Marqueur de fin de mot: #
+On va s'intéresser à k=1...
+
+On accepte lorsque la pile est vide.
+Dérivation gauche -> S -> AB : le A sera au sommet de la pile.
+
+Analyse descendante vs automate des items : le premier ne garde pas la trace, contrairement au deuxième...
+
+#### Mise en oeuvre
+
+Les outils n'implantent pas un automate à pile. Ils utilisent une implémentation récursive...
+Dans tous les cas, le choix de l'expansion est modélisé par une table d'analyse.
+
+La table d'analyse LL contient toute l'intelligence de notre analyse syntaxique.
+
+EOF: end of file...
