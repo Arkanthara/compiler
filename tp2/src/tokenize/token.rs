@@ -1,6 +1,6 @@
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Clone)]
 pub enum Type {
     Double,
     Strings,
@@ -19,7 +19,7 @@ impl fmt::Display for Type {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone)]
 pub struct Token {
     pub info: Type,
     pub content: String,
