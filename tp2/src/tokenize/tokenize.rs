@@ -3,14 +3,24 @@ use crate::Type;
 
 pub fn tokenize(text: String) -> Vec<Token> {
     let mut string = String::new();
+    let mut variable = String::new();
     let mut result: Vec<Token> = Vec::new();
     for c in text.chars() {
         match c {
-            '+' | '-' | '*' | '/' | '(' | ')' | '"' => match string.is_empty() {
-                true => {
-                    println!("Reserved symbol: {}", c);
-                    result.push(Token::create_token(Type::ReservedSymbol, c.to_string()));
-                }
+            '+' | '-' | '*' | '/' | '(' | ')' | '=' => match string.is_empty() {
+                true => match variable.is_empty() {
+                    true => {
+                        println!("Reserved symbol: {}", c);
+                        result.push(Token::create_token(Type::ReservedSymbol, c.to_string()));
+                    }
+                    false => {
+                        println!("Variable: {}", variable);
+                        result.push(Token::create_token(Type::Variable, variable.clone()));
+                        variable.clear();
+                        println!("Reserved symbol: {}", c);
+                        result.push(Token::create_token(Type::ReservedSymbol, c.to_string()));
+                    }
+                },
                 false => {
                     if let Ok(_test) = string.parse::<f64>() {
                         println!("Double: {}", string);
@@ -24,8 +34,17 @@ pub fn tokenize(text: String) -> Vec<Token> {
                 }
             },
             x if x.is_digit(10) => string.push(x),
-            '|' => match string.is_empty() {
+            '"' => match string.is_empty() {
                 true => {
+                    match variable.is_empty() {
+                        true => string.push(c),
+                        false => {
+                            println!("Variable: {}", variable);
+                            result.push(Token::create_token(Type::Variable, variable.clone()));
+                            variable.clear();
+                            string.push(c);
+                        }
+                    }
                     string.push(c);
                 }
                 false => {
@@ -43,10 +62,7 @@ pub fn tokenize(text: String) -> Vec<Token> {
                 }
             },
             '.' => match string.is_empty() {
-                true => {
-                    println!("Variable: {}", c);
-                    result.push(Token::create_token(Type::Variable, c.to_string()));
-                }
+                true => variable.push(c),
                 false => string.push(c),
             },
             y => match string.is_empty() {
@@ -55,16 +71,12 @@ pub fn tokenize(text: String) -> Vec<Token> {
                         println!("Double: {}", string);
                         result.push(Token::create_token(Type::Double, string.clone()));
                         string.clear();
-                        println!("Variable: {}", y);
-                        result.push(Token::create_token(Type::Variable, y.to_string()));
+                        variable.push(y);
                     } else {
                         string.push(y);
                     }
                 }
-                true => {
-                    println!("Variable: {}", y);
-                    result.push(Token::create_token(Type::Variable, y.to_string()));
-                }
+                true => variable.push(c),
             },
         }
     }
@@ -80,6 +92,11 @@ pub fn tokenize(text: String) -> Vec<Token> {
             );
             string.clear()
         }
+    }
+    if !variable.is_empty() {
+        println!("Variable: {}", variable);
+        result.push(Token::create_token(Type::Variable, variable.clone()));
+        variable.clear();
     }
     result
 }

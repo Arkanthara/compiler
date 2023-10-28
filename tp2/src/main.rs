@@ -12,8 +12,8 @@ use crate::tokenize::tokenize::tokenize;
 fn main() {
     let stack: Vec<Token> = tokenize("my_variable=3".to_string());
     //    println!("My vect: {:?}", stack);
-    let test: i32 = f(stack);
-    println!("Test {}", test);
+    let test: Item = f(stack);
+    println!("Test {:?}", test);
 
     //let post: Vec<Token> = infix_to_postfix(stack);
     //    println!("postfix: {:?}", post);
