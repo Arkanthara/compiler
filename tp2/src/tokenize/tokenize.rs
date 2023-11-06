@@ -7,7 +7,7 @@ pub fn tokenize(text: String) -> Vec<Token> {
     let mut result: Vec<Token> = Vec::new();
     for c in text.chars() {
         match c {
-            '+' | '-' | '*' | '/' | '(' | ')' | '=' => match string.is_empty() {
+            '+' | '-' | '*' | '/' | '(' | ')' | '=' | ';' => match string.is_empty() {
                 true => match variable.is_empty() {
                     true => {
                         println!("Reserved symbol: {}", c);
@@ -64,6 +64,25 @@ pub fn tokenize(text: String) -> Vec<Token> {
             '.' => match string.is_empty() {
                 true => variable.push(c),
                 false => string.push(c),
+            },
+            ' ' => match string.is_empty() {
+                false => {
+                    if let Ok(_test) = string.parse::<f64>() {
+                        println!("Double: {}", string);
+                        result.push(Token::create_token(Type::Double, string.clone()));
+                        string.clear();
+                    } else {
+                        string.push(c);
+                    }
+                }
+                true => match variable.is_empty() {
+                    false => {
+                        println!("Variable: {}", variable);
+                        result.push(Token::create_token(Type::Variable, variable.clone()));
+                        variable.clear();
+                    }
+                    true => continue,
+                },
             },
             y => match string.is_empty() {
                 false => {

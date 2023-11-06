@@ -73,3 +73,78 @@ pub fn e(exp: Vec<Token>, context: &Vec<Context>) -> f64 {
         None => return t(exp, context),
     }
 }
+
+pub fn pd_aff(exp: Vec<Token>, context: &Vec<Context>) -> f64 {
+    match exp.first().unwrap().content.as_str() {
+        "inv" => {
+            let mut result: Vec<Token> = exp.clone();
+            result.remove(0);
+            return -(e(result, context));
+        }
+        _ => return e(exp, context),
+    }
+}
+
+pub fn instr(exp: Vec<Token>, context: Vec<Context>) -> Vec<Context> {
+    if exp.is_empty() {
+        return context;
+    }
+    match exp.last().unwrap().content.as_str() {
+        ";" => {
+            let mut newexp: Vec<Token> = exp.clone();
+            newexp.pop();
+            match newexp.first().unwrap().content.as_str() {
+                "afficher" => {
+                    newexp.remove(0);
+                    let result = e(newexp, &context);
+                    print!("{}", result);
+                    return context;
+                }
+                "aff_ral" => {
+                    println!("");
+                    return context;
+                }
+                _ => {
+                    let item: Token = newexp.first().unwrap().clone();
+                    match item.info {
+                            Type::Variable => {
+                            let name: String = item.content;
+                            newexp.remove(0);
+                            if newexp.first().unwrap().content.as_str() != "=" {
+                                panic!("Error: we don't have the '=' for a variable assignation");
+                            }
+                            newexp.remove(0);
+                            let val: f64 = pd_aff(newexp, &context);
+                            let mut newcontext: Vec<Context> = context.clone();
+                            newcontext.push(Context {
+                                variable: name,
+                                value: val,
+                            });
+                            return newcontext;
+                    }
+                    _ => panic!("Error ! We must have a variable, or 'afficher', or 'aff_ral' in instr() function !"),
+                };
+                }
+            }
+        }
+        _ => panic!("Error ! No ';' at the end of the instruction !"),
+    }
+}
+
+pub fn listinstr(exp: Vec<Token>, context: Vec<Context>) {
+    match exp.iter().position(|x| x.content == ";") {
+        None => return,
+        Some(index) => {
+            let (var_1, var_2) = exp.split_at(index + 1);
+            let var_1: Vec<Token> = var_1.to_vec();
+            let var_2: Vec<Token> = var_2.to_vec().clone();
+            let newcontext: Vec<Context> = instr(var_1, context);
+            listinstr(var_2, newcontext);
+        }
+    }
+}
+
+pub fn script(exp: Vec<Token>) {
+    let context: Vec<Context> = Vec::new();
+    return listinstr(exp, context);
+}

@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub struct Context {
     pub variable: String,
     pub value: f64,

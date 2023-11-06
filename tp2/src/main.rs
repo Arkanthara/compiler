@@ -10,11 +10,12 @@ use crate::tokenize::token::*;
 use crate::tokenize::tokenize::tokenize;
 
 fn main() {
-    let stack: Vec<Token> = tokenize("3+4*5".to_string());
+    let stack: Vec<Token> = tokenize("id=3*2; afficher 3+2*id;".to_string());
     //    println!("My vect: {:?}", stack);
     let context: Vec<Context> = Vec::new();
-    let test: f64 = e(stack, &context);
-    println!("Test {}", test);
+    //let test: f64 = e(stack, &context);
+    //println!("Test {}", test);
+    script(stack);
 
     //let post: Vec<Token> = infix_to_postfix(stack);
     //    println!("postfix: {:?}", post);
