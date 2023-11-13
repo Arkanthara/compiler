@@ -79,7 +79,7 @@ pub fn pd_aff(exp: Vec<Token>, context: &Vec<Context>) -> f64 {
         "inv" => {
             let mut result: Vec<Token> = exp.clone();
             result.remove(0);
-            return -(e(result, context));
+            return 1.0 / (e(result, context));
         }
         _ => return e(exp, context),
     }
@@ -101,13 +101,13 @@ pub fn instr(exp: Vec<Token>, context: Vec<Context>) -> Vec<Context> {
                     return context;
                 }
                 "aff_ral" => {
-                    println!("");
+                    print!("\n");
                     return context;
                 }
                 _ => {
                     let item: Token = newexp.first().unwrap().clone();
                     match item.info {
-                            Type::Variable => {
+                        Type::Variable => {
                             let name: String = item.content;
                             newexp.remove(0);
                             if newexp.first().unwrap().content.as_str() != "=" {
@@ -121,13 +121,17 @@ pub fn instr(exp: Vec<Token>, context: Vec<Context>) -> Vec<Context> {
                                 value: val,
                             });
                             return newcontext;
-                    }
-                    _ => panic!("Error ! We must have a variable, or 'afficher', or 'aff_ral' in instr() function !"),
-                };
+                        }
+                        _ => {
+                            panic!("Error ! We must have a variable, or 'afficher', or 'aff_ral' in instr() function !");
+                        }
+                    };
                 }
             }
         }
-        _ => panic!("Error ! No ';' at the end of the instruction !"),
+        _ => {
+            panic!("Error ! No ';' at the end of the instruction !");
+        }
     }
 }
 
