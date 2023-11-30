@@ -194,6 +194,40 @@ pub fn instr(exp: Vec<Token>, context: Vec<Context>) -> Vec<Context> {
 // LISTINSTR -> INSTR LISTINSTR
 // LISTINSTR -> epsilon
 pub fn listinstr(exp: Vec<Token>, context: Vec<Context>) {
+    match exp.first() {
+        None => return,
+        Some(item) => match item.content.as_str() {
+            "boucle" => {
+                let mut tmp: Vec<Token> = exp.clone();
+                tmp.remove(0);
+                match tmp[0].info {
+                    Type::Double => {
+                        if let Ok(iter) = tmp[0].content.parse::<i32>() {
+                            tmp.remove(0);
+                            match tmp[0].content.as_str() {
+                                "{" => {
+                                    tmp.remove(0);
+                                    tmp.reverse();
+                                    match tmp.iter().position(|x| x.content == "}") {
+                                        None => panic!("No '}' found !"),
+                                        Some(index) => {}
+                                    }
+                                }
+                                _ => panic!("Error ! bad syntax for the 'boucle'"),
+                            }
+                        } else {
+                            panic!("The number given in boucle is not an integer !");
+                        }
+                    }
+                    _ => {
+                        panic!("Error ! boucle must be precedeed by a number !");
+                    }
+                }
+            }
+            _ => (),
+        },
+    }
+
     match exp.iter().position(|x| x.content == ";") {
         None => match exp.is_empty() {
             true => return,
