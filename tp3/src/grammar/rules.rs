@@ -35,6 +35,12 @@ pub fn f(exp: Vec<Token>, context: &Vec<Context>) -> f64 {
             _ => match item.info {
                 Type::Double => return item.content.parse::<f64>().unwrap(),
                 Type::Variable => return get_value(context, item.content.clone()),
+                Type::ReservedSymbol => {
+                    if item.content == "-" && exp.len() == 2 {
+                        return -exp[1].content.parse::<f64>().unwrap();
+                    }
+                    panic!("Error of type in F!");
+                }
                 _ => {
                     panic!("Error of type in F!");
                 }

@@ -44,7 +44,7 @@ fn main() {
          tmpPi = racine tmpPi;
          afficher i;
          aff_ral;
-         afficher pi + tmpPi * (0 - 1);
+         afficher pi + tmpPi * - 1;
          aff_ral;
          afficher tmpPi;
          aff_ral;
@@ -54,5 +54,6 @@ fn main() {
         .to_string(),
         false,
     );
+    println!("Tokenization: {:?}", pi_approximation);
     script(pi_approximation);
 }
