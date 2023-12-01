@@ -193,9 +193,10 @@ pub fn instr(exp: Vec<Token>, context: Vec<Context>) -> Vec<Context> {
 // Rules:
 // LISTINSTR -> INSTR LISTINSTR
 // LISTINSTR -> epsilon
-pub fn listinstr(exp: Vec<Token>, context: Vec<Context>) {
+pub fn listinstr(exp: Vec<Token>, context: Vec<Context>) -> Vec<Context> {
+    println!("List_instr: {:?}", exp);
     match exp.first() {
-        None => return,
+        None => return context,
         Some(item) => match item.content.as_str() {
             "boucle" => {
                 let mut tmp: Vec<Token> = exp.clone();
@@ -209,8 +210,20 @@ pub fn listinstr(exp: Vec<Token>, context: Vec<Context>) {
                                     tmp.remove(0);
                                     tmp.reverse();
                                     match tmp.iter().position(|x| x.content == "}") {
-                                        None => panic!("No '}' found !"),
-                                        Some(index) => {}
+                                        None => panic!("No end bracket found !"),
+                                        Some(index) => {
+                                            let (tmp_2, tmp_1) = tmp.split_at(index);
+                                            let mut tmp_1 = tmp_1.to_vec();
+                                            let mut tmp_2 = tmp_2.to_vec();
+                                            tmp_1.remove(0);
+                                            tmp_1.reverse();
+                                            tmp_2.reverse();
+                                            let mut newcontext = context.clone();
+                                            for _i in 0..iter {
+                                                newcontext = listinstr(tmp_1.clone(), newcontext);
+                                            }
+                                            return listinstr(tmp_2, newcontext);
+                                        }
                                     }
                                 }
                                 _ => panic!("Error ! bad syntax for the 'boucle'"),
@@ -230,7 +243,7 @@ pub fn listinstr(exp: Vec<Token>, context: Vec<Context>) {
 
     match exp.iter().position(|x| x.content == ";") {
         None => match exp.is_empty() {
-            true => return,
+            true => return context,
             false => panic!(
                 "Error ! No ';' at the end of the instruction {} !",
                 exp[0].content
@@ -241,7 +254,7 @@ pub fn listinstr(exp: Vec<Token>, context: Vec<Context>) {
             let var_1: Vec<Token> = var_1.to_vec();
             let var_2: Vec<Token> = var_2.to_vec().clone();
             let newcontext: Vec<Context> = instr(var_1, context);
-            listinstr(var_2, newcontext);
+            listinstr(var_2, newcontext)
         }
     }
 }
@@ -250,5 +263,5 @@ pub fn listinstr(exp: Vec<Token>, context: Vec<Context>) {
 // SCRIPT -> LISTINSTR
 pub fn script(exp: Vec<Token>) {
     let context: Vec<Context> = Vec::new();
-    return listinstr(exp, context);
+    listinstr(exp, context);
 }

@@ -28,4 +28,31 @@ fn main() {
     println!("Result of the grammar rules:");
     let stack: Vec<Token> = tokenize("var_1 = inv 2.; var_2 = inv (2. + 1. * 2.); afficher ((2. + 2. * 8.) * var_1 + 2.0 * 5. + 1.) * var_2;aff_ral;".to_string(), false);
     script(stack);
+
+    let pi_approximation: Vec<Token> = tokenize(
+        "
+        pi = 3.141592;
+        sPi = 0;
+        i = 1;
+        boucle 50
+        {
+         invI4 = inv (i*i*i*i);
+         sPi = sPi + invI4;
+        
+         tmpPi = sPi * 90;
+         tmpPi = racine tmpPi;
+         tmpPi = racine tmpPi;
+         afficher i;
+         aff_ral;
+         afficher pi + tmpPi * -1;
+         aff_ral;
+         afficher tmpPi;
+         aff_ral;
+         aff_ral;
+         i = i + 1;
+        }"
+        .to_string(),
+        false,
+    );
+    script(pi_approximation);
 }
