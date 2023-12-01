@@ -171,6 +171,12 @@ pub fn instr(exp: Vec<Token>, context: Vec<Context>) -> Vec<Context> {
                             newexp.remove(0);
                             let val: f64 = pd_aff(newexp, &context);
                             let mut newcontext: Vec<Context> = context.clone();
+                            match newcontext.iter().position(|x| x.variable == name) {
+                                None => (),
+                                Some(index) => {
+                                    newcontext.remove(index);
+                                }
+                            }
                             newcontext.push(Context {
                                 variable: name,
                                 value: val,
@@ -194,7 +200,7 @@ pub fn instr(exp: Vec<Token>, context: Vec<Context>) -> Vec<Context> {
 // LISTINSTR -> INSTR LISTINSTR
 // LISTINSTR -> epsilon
 pub fn listinstr(exp: Vec<Token>, context: Vec<Context>) -> Vec<Context> {
-    println!("List_instr: {:?}", exp);
+    // println!("Context: {:?}", context);
     match exp.first() {
         None => return context,
         Some(item) => match item.content.as_str() {
