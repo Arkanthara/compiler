@@ -1,3 +1,9 @@
+---
+title: Questions examen
+author: Michel Donnet
+date: \today
+---
+
 # Principes généraux
 
 ## Q1.1 Analyseur lexical, qu'est ce que c'est ?
