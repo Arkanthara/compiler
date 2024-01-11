@@ -12,11 +12,11 @@ L'analyse lexicale lit les caractères du source, et détermine la `séquence de
 
 Le lexique d'un langage définit les mots qui le composent
 
-- De manière explicite, en extension, comme: `( procedure if >= . } ;` etc...
-- De manière générique, en compréhension, comme:
-  - identificateur
-  - chaînes de caractères
-  - constantes numériques
+1. De manière explicite, en extension, comme: `( procedure if >= . } ;` etc...
+2. De manière générique, en compréhension, comme:
+  a. identificateur
+  b. chaînes de caractères
+  c. constantes numériques
 
 (Les langues naturelles ont par exemple des règles génériques pour le nombre (singulier-pluriel) et le genre (masculin-féminin)
 
@@ -24,8 +24,8 @@ En informatique, on parle de symboles terminaux. La justification de ce terme se
 
 Cela conduit souvent à des grammaires à 2 niveaux: 
 
-- grammaire définissant les classes de terminaux
-- niveau syntaxique lui-même
+1. grammaire définissant les classes de terminaux
+2. niveau syntaxique lui-même
 
 ## Q1.2 Analyseur syntaxique, qu'est ce que c'est ?
 
@@ -33,8 +33,8 @@ L'analyse syntaxique vérifie que la structure de cette séquence (définie par 
 
 Principes de l'analyse syntaxique:
 
-- reçoit de l'analyseur lexical une suite de symboles
-- reconnait dans cette suite la structure d'un texte
+1. reçoit de l'analyseur lexical une suite de symboles
+2. reconnait dans cette suite la structure d'un texte
 
 La construction d'un arbre syntaxique permet uniquement d'avoir une représentation commode pour comprendre l'analyse syntaxique.
 
@@ -44,20 +44,23 @@ noeuds: symboles non-terminaux
 
 C'est un arbre résultant de l'analyse syntaxique.
 
-Fait apparaître la _sturcture syntaxique_ d'un mot.
+Fait apparaître la __sturcture syntaxique__ d'un mot.
 
 C'est une notion très importante !!!!!
 
-On parle aussi d'_arbre de dérivation_.
+On parle aussi d'__arbre de dérivation__.
 
-Soit $ m \in V_{T}^* $.
+$$\text{Soit}\ m \in V_T^* $$
+
 alors $m \in L(G)$ ss'il existe un arbre syntaxique selon G dont le mot aux feuilles est m.
 
 On dit alors que cet arbre est un arbre syntaxique pour m, ou que m admet cet arbre.
 
 Répondre à $m \in L(G)$ = chercher un arbre syntaxique pour m.
 
-En pratique; les analyseurs syntaxiques ne construisent pas un arbre syntaxique. L'arbre est simplement une représentation commode pour comprendre l'analyse syntaxique.
+En pratique:
+
+Les analyseurs syntaxiques ne construisent pas un arbre syntaxique. L'arbre est simplement une représentation commode pour comprendre l'analyse syntaxique.
 Ils construisent une dérivation particulière, appelée gauche ou droite.
 
 À une dérivation correspond _un seul arbre_...
@@ -68,13 +71,13 @@ Ils construisent une dérivation particulière, appelée gauche ou droite.
 
 La syntaxe régit la forme des phrases
 
-- les phrases acceptables au vu de la définition syntaxique appartiennent au langage
-- les autres n'y appartiennent pas
+1. les phrases acceptables au vu de la définition syntaxique appartiennent au langage
+2. les autres n'y appartiennent pas
 
 La définition syntaxique d'un langage s'appuie sur:
 
-- les terminaux, définis au niveau lexical
-- des règles de bonne forme pour des séquences de terminaux, appelées `notions non-terminales`
+1. les terminaux, définis au niveau lexical
+2. des règles de bonne forme pour des séquences de terminaux, appelées `notions non-terminales`
 
 La justification du terme `non-terminal` se verra sur les arbres de dérivation.
 
@@ -101,8 +104,8 @@ dynamique: à l'exécution
 
 Selon le langage, on mène toutes les tâches de compilation
 
-- de front en une passe: on ne fait qu'un passage sur le texte source
-- successivement en plusieurs passes: on fait des passes successives sur des formes intermédiaires représentant le code source.
+1. de front en une passe: on ne fait qu'un passage sur le texte source
+2. successivement en plusieurs passes: on fait des passes successives sur des formes intermédiaires représentant le code source.
   Certaines créent des structures de données utilisées par des passes ultérieures.
   On peut ainsi faire une analyse sémantique plus fine et du meilleur code objet.
 
@@ -113,9 +116,9 @@ Un `auto-interprète` ou `interprète méta-circulaire` est écrit dans le langa
 Un `auto-compilateur` est écrit dans le langage qu'il peut compiler. => problème du bootstrap ou amorçage de la pompe...
 Si on veut écrire le compilateur dans son propre langage S
 
-- écrire d'abord un compilateur d'un sous-ensemble S' de S en E, et le compiler
-- écrire ensuite en S' le compilateur de S
-- c'est ce qu'on appelle un bootstrap du compilateur
+1. écrire d'abord un compilateur d'un sous-ensemble S' de S en E, et le compiler
+2. écrire ensuite en S' le compilateur de S
+3. c'est ce qu'on appelle un bootstrap du compilateur
 
 Générateur de compilateurs: C'est une grammaire que l'on compile pour obtenir un compilateur
 
@@ -133,15 +136,15 @@ Ne peut donc être évaluée si l'un des arguments d'appel ne peut pas l'être
 
 Un exemple typique de fonction non stricte est la conditionnelle "Si":
 
-- elle évalue toujours son premier argument d'appel, la condition
-- elle n'évalue que l'un ou (exclusif) l'autre de ses deuxièmes et troisième arguments, selon la valeur de la condition
+1. elle évalue toujours son premier argument d'appel, la condition
+2. elle n'évalue que l'un ou (exclusif) l'autre de ses deuxièmes et troisième arguments, selon la valeur de la condition
 
 # Grammaires algébriques
 
 ### Limites des langages réguliers
 
 Les langages réguliers ne suffisent pas.
-ex: {$a^n b^n $| $n \geq 0$}: pas régulier (Pourrait servir pour vérifier si le nombre de parenthèses est correct dans une expression...)
+ex: $\{a^n b^n | n \geq 0\}$: pas régulier (Pourrait servir pour vérifier si le nombre de parenthèses est correct dans une expression...)
 
 Au fait on a besoin d'une forme de mémoire infini pour conter les _a_ et les _b_ car c'est non borné -> langage non régulier
 
@@ -149,17 +152,20 @@ Si la mémorisation est bornée, c'est un langage régulier
 
 Lemme de pompage
 
-Soit L un langage régulier. Alors il existe un entier k tq pour tout mot m de L de longueur $\geq k$, il existe des mots $x, u, y \in \Sigma^* $
-avec $m = xuv$, $u \neq \epsilon$ et pour $\forall n$, $xu^ny \in L$
+Soit L un langage régulier.
+Alors il existe un entier k tq pour tout mot m de L de longueur >= k, il existe des mots 
+$$x, u, y \in \Sigma^* $$
+avec $m = xuv$, $u \neq \epsilon$ et $\forall n$, $xu^ny \in L$
 
 ## Q3.1: Définir formellement ce qu'est une grammaire
 
 Une grammaire algébrique ou hors-contexte est un quadruplet
-$G=(V_T, V_N, P, S)$
+$$G=(V_T, V_N, P, S)$$
 
-- $V_T$ et $V_N$ sont des vocabulaires disjoints: $V_T$ est l'ensemble des terminaux, $V_N$ l'ensemble des non-terminaux
-- $S \in V_N$ est l'axiome, ou symbole de départ
-- $P \subseteq V_N \times (V_N \cup V_T)^* $ est l'ensemble des (règles de) productions.
+1. $V_T$ et $V_N$ sont des vocabulaires disjoints:
+    $V_T$ est l'ensemble des terminaux, $V_N$ l'ensemble des non-terminaux
+2. $S \in V_N$ est l'axiome, ou symbole de départ
+3. $$P \subseteq V_N \times (V_N \cup V_T)^* $$ est l'ensemble des (règles de) productions.
 
 La grammaire engendre des mots de $V_T$
 
@@ -173,16 +179,19 @@ On peut avoir plusieurs dérivations pour un même mot.
 #### Langage engendré par une grammaire
 
 Soit G une grammaire algébrique d'axiome S. Le _langage engendré_ par G est défini par:
-$L(G)={m \in V_T^* |S \Rightarrow^* m}$
+$$L(G)={m \in V_T^* |S \Rightarrow^* m}$$
 Déterminer si un mot m appartient au langage engendré, c'est déterminer si: $S\Rightarrow_{G}^* m ?$
 
 #### Dérivation directe (formellement)
 
-Dérivation directe: Soient $\beta, \beta' \in (V_N \cup V_T)^*$ . $\beta$ se dérive directement en $\beta'$ selon G, noté $\beta \Rightarrow_{G} \beta'$, s'il existe des mots
-$\gamma, \gamma' \in (V_N \cup V_T)^* $ et une production $X \rightarrow \alpha$ tels que:
+Dérivation directe: Soient $$\beta, \beta' \in (V_N \cup V_T)^* $$
+$\beta$ se dérive directement en $\beta'$ selon G, noté $\beta \Rightarrow_{G} \beta'$, s'il existe des mots
+$$\gamma, \gamma' \in (V_N \cup V_T)^* $$
+et une production $$X \rightarrow \alpha$$ 
+tels que:
 
-- $\beta = \gamma X \gamma'$
-- $\beta' = \gamma \alpha \gamma'$
+1. $$\beta = \gamma X \gamma'$$
+2. $$\beta' = \gamma \alpha \gamma'$$
 
 (En gros, un symbole est remplacé par un ou plusieurs symboles...)
 
@@ -194,7 +203,7 @@ $$ \beta_0 \Rightarrow \beta_1 \Rightarrow \dots \Rightarrow \beta_n$$
 
 #### Relation de dérivation
 
-La relation de dérivation $\Rightarrow_{G}^* $ est la fermeture réflexive et transitive de la relation de dérivation directe $\Rightarrow_{G}$
+La relation de dérivation $$\Rightarrow_{G}^* $$ est la fermeture réflexive et transitive de la relation de dérivation directe $\Rightarrow_{G}$
 
 #### Langages algébriques
 
@@ -210,55 +219,66 @@ Deux grammaires sont _équivalentes_ si elles engendrent le même langage
 
 Tout langage régulier est algébrique
 
-- possible d'utiliser une grammaire algébrique au lieu d'expressions régulières
-- Mais AF plus efficaces
+1. possible d'utiliser une grammaire algébrique au lieu d'expressions régulières
+2. Mais AF plus efficaces
 
 Grammaire régulière: peut pas avoir plus d'un symbole non terminal. Ex: A -> a régulière; A -> aB régulière; A -> aBC non régulière
 
 #### Dérivation gauche / droite (formellement)
 
-Soient $\beta, \beta' \in (V_N \cup V_T)^* $ et $\beta_0 \Rightarrow \beta_1 $ une dérivation de $\beta$ en $\beta'$.Si à chaque étape on choisit de remplacer dans $\beta_i$ le non-terminal
+Soient
+$$\beta, \beta' \in (V_N \cup V_T)^* $$
+et 
+$$\beta_0 \Rightarrow \beta_1 $$ 
+une dérivation de $\beta$ en $\beta'$.
+Si à chaque étape on choisit de remplacer dans $\beta_i$ le non-terminal
 
-- le plus à gauche: dérivation gauche (leftmost derivation) notée $\beta lm\Rightarrow ^* \beta'$
-- le plus à droite: dérivation droite (rightmost derivation) notée $\beta rm\Rightarrow^* \beta'$
+1. le plus à gauche: dérivation gauche (leftmost derivation) notée $\beta lm\Rightarrow ^* \beta'$
+2. le plus à droite: dérivation droite (rightmost derivation) notée $\beta rm\Rightarrow^* \beta'$
 
 #### Récapitulatif
 
-- 1 dérivation -> 1 seul arbre
-- 1 arbre -> potentiellement plusieurs dérivations
-- 1 arbre -> unique dérivation gauche et unique dérivation droite
-- 1 mot -> potentiellement plusieurs arbres/interprétations
+1. 1 dérivation -> 1 seul arbre
+2. 1 arbre -> potentiellement plusieurs dérivations
+3. 1 arbre -> unique dérivation gauche et unique dérivation droite
+4. 1 mot -> potentiellement plusieurs arbres/interprétations
 
 ## Q3.2: Classification des grammaires
 
 Classification de Chomsky
 
-$\text{régulier} \subset \text{algébrique} \subset \text{contextuel} \subset \text{arbitraire}$
+$$\text{régulier} \subset \text{algébrique} \subset \text{contextuel} \subset \text{arbitraire}$$
 
 Les grammaires algébriques expriment:
 
-- les prcupriétés structurelles des langages
-- mais pas leurs prcupriétés contextuelles
-- on les appelle aussi grammaires hors contexte
+1. les prcupriétés structurelles des langages
+2. mais pas leurs prcupriétés contextuelles
+3. on les appelle aussi grammaires hors contexte
 
 Par exemple, on ne peut pas exprimer par une grammaire algébrique
 
-- que toute variable utilisée a été déclarée
-- les vérifications de typage etc...
+1. que toute variable utilisée a été déclarée
+2. les vérifications de typage etc...
   Ces prcupriétés relèvent de l'analyse sémantique
 
-Pour être sensible au contexte, il faut utiliser une grammaire contextuelle (Productions de la forme $\alpha \rightarrow \beta$ avec $|\alpha| \leq |\beta|$ et $\alpha, \beta \in (V_N \cup V_T)^* $
+Pour être sensible au contexte, il faut utiliser une grammaire contextuelle (Productions de la forme $\alpha \rightarrow \beta$ avec 
+$$|\alpha| \leq |\beta|$$
+et
+$$\alpha, \beta \in (V_N \cup V_T)^* $$
 
 Ex: AB $\rightarrow$ BA
 
 Les grammaires contextuelles
 
-- engendrent les langages contextuels
-- ne sont pas utilisées lors de l'analyse syntaxique
-- pas d'algorithme polynomial connu qui, pour tout mot, détermine si ce mot est engendré par une grammaire contextuelle donnée.
+1. engendrent les langages contextuels
+2. ne sont pas utilisées lors de l'analyse syntaxique
+3. pas d'algorithme polynomial connu qui, pour tout mot, détermine si ce mot est engendré par une grammaire contextuelle donnée.
 
 Il existe des grammaires arbitraires.
-Productions de la forme $\alpha \rightarrow \beta$ avec $\alpha, \beta \in (V_N \cup V_T)^* $
+Productions de la forme 
+$$\alpha \rightarrow \beta$$ 
+avec 
+$$\alpha, \beta \in (V_N \cup V_T)^* $$
 
 Ex: AB $\rightarrow \epsilon$
 
@@ -276,17 +296,16 @@ On ne travaille que avec des grammaires non ambiguës !!!
 
 Certaines grammaires sont clairement ambiguës, et d'autres sont mal conçues
 
-$G_1$
+$$G_1$$
 
-$\text{listInst} \rightarrow \epsilon | \text{inst listInst}$
-$\text{inst} \rightarrow \text{affect PV} | \text{lecture PV}$
+$$\text{listInst} \rightarrow \epsilon | \text{inst listInst}$$
+$$\text{inst} \rightarrow \text{affect PV} | \text{lecture PV}$$
 
-$
-\text{lecture} \rightarrow \text{READ IDENT}$
+$$\text{lecture} \rightarrow \text{READ IDENT}$$
 
-$G_2$
-$\text{listInst} \rightarrow \text{inst listInst} | \text{inst}$
-$inst \rightarrow \epsilon | \text{affect PV} | \text{lecture PV}$
+$$G_2$$
+$$\text{listInst} \rightarrow \text{inst listInst} | \text{inst}$$
+$$\text{inst} \rightarrow \epsilon | \text{affect PV} | \text{lecture PV}$$
 
 $G_1$: on ne peut pas ajouter $\epsilon$ où on veut !!!! (non ambiguë)
 
@@ -304,15 +323,15 @@ Grammaire à cupérateurs: grammaire faisant intervenir des cupérateurs avec as
 
 Pour rendre une grammaire à cupérateur non ambiguë:
 
-- on ajoute un non terminal par niveau de priorité (S pour +, P pour * , etc)
+1. on ajoute un non terminal par niveau de priorité (S pour +, P pour * , etc)
 
-- les moins prioritaires en haut de l'arbre, proches de l'axiome
+2. les moins prioritaires en haut de l'arbre, proches de l'axiome
 
-- les plus prioritaires en bas de l'arbre, proches des feuilles
+3. les plus prioritaires en bas de l'arbre, proches des feuilles
 
-- les axiomes et terminaux tout en bas (les atomes)
+4. les axiomes et terminaux tout en bas (les atomes)
 
-- associativité gauche\droite $\Rightarrow$ récursivité gauche\droite
+5. associativité gauche/droite $\Rightarrow$ récursivité gauche/droite
 
 Grammaires pathologiques: certains non-terminaux ne servent à rien.
 Cela est souvent dû à une erreur de conception.
@@ -324,25 +343,32 @@ Une grammaire est dite réduite si elle ne contient pas de non-terminal improduc
 
 #### Définition
 
-Un non-terminal $X \in V_N$ est improductif s'il n'existe pas de mot $u \in V_T^* $ tel que $X \Rightarrow^* u$ (le langage engendré par $X$ est vide). Il est productif sinon.
+Un non-terminal $X \in V_N$ est improductif s'il n'existe pas de mot 
+$$u \in V_T^* \ tq \ X \Rightarrow^* u$$
+(le langage engendré par $X$ est vide). Il est productif sinon.
 
 #### Calcul des productifs: idée
 
 X est productif:
 
-- s'il existe une production $X \rightarrow u$ avec $u \in V_T^* $
-- ou s'il existe une production $X \rightarrow \alpha$ avec $\alpha \in (V_N \cup V_T)^* $ tel que tous les non-terminaux apparaissant dans $\alpha$ sont productifs.
+1. s'il existe une production 
+$$X \rightarrow u \ \text{avec} \ u \in V_T^* $$
+2. ou s'il existe une production 
+$$X \rightarrow \alpha \ \text{avec} \  \alpha \in (V_N \cup V_T)^* $$
+tel que tous les non-terminaux apparaissant dans $\alpha$ sont productifs.
 
 #### Définition d'un inaccessible
 
-Soit $G$ une grammaire algébrique d'axiome $S$. Un non-terminal $X \in V_N$ est inaccessible s'il n'existe pas de mots $\alpha, \beta \in (V_N \cup V_T)^* $ tels que $S \Rightarrow^* \alpha X \beta$. Il est accessible sinon.
+Soit $G$ une grammaire algébrique d'axiome $S$. Un non-terminal $X \in V_N$ est inaccessible s'il n'existe pas de mots 
+$$\alpha, \beta \in (V_N \cup V_T)^* $$
+tels que $S \Rightarrow^* \alpha X \beta$. Il est accessible sinon.
 
 #### Calcul des accessibles: idée
 
 $X$ est accessible si:
 
-- c'est l'axiome
-- ou il existe une production $Y \rightarrow \alpha X \beta$ telle que $Y$ est accessible.
+1. c'est l'axiome
+2. ou il existe une production $Y \rightarrow \alpha X \beta$ telle que $Y$ est accessible.
 
 Même principe d'itérations de point fixe que pour les accessibles mais on cherche les candidats en partie __droite__ de production
 
